@@ -1,0 +1,36 @@
+{
+  "name": "@akakalab/client-sb-bootstrap-angular",
+  "version": "1.0.0",
+  "description": "SB Bootstrap 2 Angular Edition by Akakalab",
+  "scripts": {
+    "start": "node scripts/serve.js",
+    "serve:build": "npm run start -- ../dist",
+    "clean": "rm -rf dist/*",
+    "build": "node scripts/build.js ./dist",
+    "prebuild:serious": "npm run clean",
+    "install": "bower install && echo 'TODO: copy certain files from bower_components into the /public directory'"
+  },
+  "private": "true",
+  "license": "MIT",
+  "contributors": [
+    {
+      "name": "dk",
+      "email": "mondekei@gmail.com",
+      "url": "http://dklab.co"
+    }
+  ],
+  "dependencies": {
+    "concat": "^1.0.0",
+    "mkdirp": "^0.5.1",
+    "uglify-js": "^2.4.23"
+  },
+  "devDependencies": {
+    "superstatic": "^2.2.0"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "engines": {
+    "npm": ">=2.0.0"
+  }
+}
