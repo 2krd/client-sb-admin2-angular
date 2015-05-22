@@ -42,40 +42,40 @@
 
   }])
 
-  .controller('DashboardController', function($ocLazyLoad) {
+  .controller('DashboardController', ['$ocLazyLoad', function($ocLazyLoad) {
     console.log('Dashboard');
     $ocLazyLoad.load({
       files: ['public/js/morris-data.js'], // just for demo purpose
       cache: false
     });
-  })
+  }])
 
-  .controller('MorrisController', function($ocLazyLoad) {
+  .controller('MorrisController', ['$ocLazyLoad', function($ocLazyLoad) {
     console.log('Morris');
     $ocLazyLoad.load({
       files: ['public/js/morris-data.js'], // just for demo purpose
       cache: false
     });
-  })
+  }])
 
-  .controller('FlotController', function($ocLazyLoad) {
+  .controller('FlotController', ['$ocLazyLoad', function($ocLazyLoad) {
     console.log('Flot');
     $ocLazyLoad.load({
       files: ['public/js/flot-data.js'],
       cache: false
     });
-  })
+  }])
 
-  .controller('TablesController', function($document) {
+  .controller('TablesController', ['$document', function($document) {
     console.log('Tables');
     $document.ready(function() {
       $('#dataTables-example').DataTable({
         responsive: true
       });
     });
-  })
+  }])
 
-  .controller('NotificationsController', function($document) {
+  .controller('NotificationsController', ['$document', function($document) {
     console.log('Notifications');
     $document.ready(function() {
       // tooltip demo
@@ -88,7 +88,7 @@
       $("[data-toggle=popover]")
         .popover()
     });
-  })
+  }])
 
   .controller('LoginController', function() {
     alert('Login');

@@ -13,9 +13,8 @@
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 var path = require('path');
-var exorcist = require('exorcist');
-var browserify = require('browserify');
 var concat = require('concat');
+var UglifyJS = require('uglify-js');
 
 var outDir = process.argv[2]; // the first param after 'node scripts/build.js'
 if(!outDir)
@@ -29,15 +28,9 @@ var outCss = path.join(outDir, 'app/css/bundle.css');
 ensureDir(outJs);
 ensureDir(outCss);
 
-var browserifyOpts = {
-  bundleExternal: false,
-  detectGlobals: false,
-  debug: true,
-  commondir: false
-};
-
-packJS();
-packCSS();
+//packJS();
+//packCSS();
+symlinkHtml();
 
 function processIndexFile() {
   // TODO: parse index.html file, get a list of .js files and a list of .css files to feed the 'packJS' and 'packCSS' functions
@@ -45,19 +38,22 @@ function processIndexFile() {
 }
 
 function packJS() {
-  browserify([
-    'bower_components/jquery/dist/jquery.min.js',
-    'bower_components/bootstrap/dist/js/bootstrap.min.js',
-    'bower_components/metisMenu/dist/metisMenu.js', // TODO: minify this first
+  var result = UglifyJS.minify([
+    'bower_components/jquery/dist/jquery.js',
+    'bower_components/bootstrap/dist/js/bootstrap.js',
+    'bower_components/metisMenu/dist/metisMenu.js',
     'bower_components/angular/angular.js',
     'bower_components/angular-ui-router/release/angular-ui-router.js',
     'bower_components/ocLazyLoad/dist/ocLazyLoad.js',
     'bower_components/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js',
     'app/js/main.js'
-  ], browserifyOpts)
-  .bundle()
-  .pipe(exorcist(mapJs))
-  .pipe(fs.createWriteStream(outJs, 'utf8'));
+  ], {
+    comments: true,
+    outSourceMap: mapJs,
+    mangle: false
+  });
+  fs.writeFileSync(outJs, result.code);
+  fs.writeFileSync(mapJs, result.map);
 }
 
 function packCSS() {
@@ -67,7 +63,8 @@ function packCSS() {
     'bower_components/startbootstrap-sb-admin-2/dist/css/timeline.css',
     'bower_components/startbootstrap-sb-admin-2/dist/css/sb-admin-2.css',
     'bower_components/morrisjs/morris.css',
-    'bower_components/font-awesome/css/font-awesome.min.css'
+    'bower_components/font-awesome/css/font-awesome.min.css',
+    'app/css/main.css'
   ], outCss, function(error) {
     if(error)
       throw error;
@@ -77,4 +74,31 @@ function packCSS() {
 function ensureDir(target) {
   var dir = path.parse(target)['dir'];
   mkdirp.sync(dir);
+}
+
+function symlinkPublic() {
+  var execSync = require('child_process').execSync;
+  var destPublic = path.resolve(path.join(outDir, 'public'));
+  var linkPublic = 'rm -rf ' + destPublic + ' && ln -s ' + path.join(process.cwd(), 'public') + ' ' + destPublic;
+  console.log(linkPublic);
+  var child = execSync(linkPublic);
+}
+
+function symlinkBowerComponents() {
+  var execSync = require('child_process').execSync;
+  var destBower = path.resolve(path.join(outDir, 'bower_components'));
+  var linkBower = 'rm -rf ' + destBower + ' && ln -s ' + path.join(process.cwd(), 'bower_components') + ' ' + destBower;
+  console.log(linkBower);
+  var child = execSync(linkBower);
+}
+
+// here we just symlink the whole app/html directory
+// without needing to preprocess any file
+function symlinkHtml() {
+  var execSync = require('child_process').execSync;
+  var dest = path.resolve(path.join(outDir, 'app/html'));
+  ensureDir(dest); // it's okay to ensure html/ exists, next we're going to 'rm -rf' it anyway, then put a symlink there
+  var cmd = 'rm -rf ' + dest + ' && ln -s ' + path.join(process.cwd(), 'app/html') + ' ' + dest;
+  console.log(cmd);
+  var child = execSync(cmd);
 }
