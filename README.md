@@ -1,4 +1,4 @@
-# client-sb-bootstrap-angular
+# client-sb-admin2-angular
 
 This is a port of [Start Bootstrap Admin 2 theme](http://startbootstrap.com/template-overviews/sb-admin-2/) to a simple [AngularJS](https://angularjs.org/) base. We've tried to retain as much as possible the original libraries and their respective code structures designed by the cool people at [Start Bootstrap](http://startbootstrap.com/) (kudos to them). The modifications we made were to aim at these main goals:
 

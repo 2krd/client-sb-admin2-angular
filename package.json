@@ -1,7 +1,7 @@
 {
-  "name": "@akakalab/client-sb-bootstrap-angular",
+  "name": "@akakalab/client-sb-admin2-angular",
   "version": "1.0.0",
-  "description": "SB Bootstrap 2 Angular Edition by Akakalab",
+  "description": "SB Admin 2 AngularJS Edition by Akakalab",
   "scripts": {
     "start": "node scripts/serve.js",
     "serve:build": "npm run start -- ../dist",
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Thesephi/client-sb-bootstrap-angular.git"
+    "url": "https://github.com/Thesephi/client-sb-admin2-angular.git"
   },
   "engines": {
     "npm": ">=2.0.0"
