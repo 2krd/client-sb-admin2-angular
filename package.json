@@ -7,30 +7,29 @@
     "serve:build": "npm run start -- ../dist",
     "clean": "rm -rf dist/*",
     "build": "node scripts/build.js ./dist",
-    "prebuild:serious": "npm run clean",
-    "install": "bower install && echo 'TODO: copy certain files from bower_components into the /public directory'"
+    "prebuild": "npm run clean",
+    "install": "bower install"
+  },
+  "devDependencies": {
+    "superstatic": "^2.2.0",
+    "concat": "^1.0.0",
+    "jsdom": "^3.1.2",
+    "mkdirp": "^0.5.1",
+    "uglify-js": "^2.4.23"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Thesephi/client-sb-bootstrap-angular.git"
+  },
+  "engines": {
+    "npm": ">=2.0.0"
   },
   "private": "true",
   "license": "MIT",
   "contributors": [
     {
       "name": "dk",
-      "email": "mondekei@gmail.com",
-      "url": "http://dklab.co"
+      "email": "thesephi@gmail.com"
     }
-  ],
-  "dependencies": {
-    "concat": "^1.0.0",
-    "mkdirp": "^0.5.1",
-    "uglify-js": "^2.4.23"
-  },
-  "devDependencies": {
-    "superstatic": "^2.2.0"
-  },
-  "repository": {
-    "type": "git"
-  },
-  "engines": {
-    "npm": ">=2.0.0"
-  }
+  ]
 }
